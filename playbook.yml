@@ -2,6 +2,13 @@
 - hosts: localhost
   connection: local
   tasks:
+    - name: Running updates
+      become: yes
+      dnf:
+        name: "*"
+        update_only: yes
+        state: latest
+
     - name: Remove Evolution
       become: yes
       package:
@@ -28,3 +35,34 @@
       flatpak:
         name: https://flathub.org/repo/appstream/com.spotify.Client.flatpakref
         state: present
+
+    - name: Install Slack
+      flatpak:
+        name: https://flathub.org/repo/appstream/com.slack.Slack.flatpakref
+        state: present
+
+    #- name: Install Visual Studio Code
+      #become: yes
+      #dnf:
+        #name: https://go.microsoft.com/fwlink/?LinkID=760867
+        #state: present
+
+    - name: Install Visual Studio Code
+      import_role: 
+        name: vscode
+      vars:
+        users:
+          - username: garrett
+            visual_studio_code_extensions:
+              - dracula-theme.theme-dracula
+              - vscoss.vscode-ansible
+              - tht13.html-preview-vscode
+              - davidanson.vscode-markdownlint
+              - ms-python.python
+              - tyriar.shell-launcher
+              - vscodevim.vim
+            visual_code_studio_settings: {
+              "git.autofetch": true,
+              "window.titleBarStyle": "custom",
+              "workbench.colorTheme": "Dracula"
+            }

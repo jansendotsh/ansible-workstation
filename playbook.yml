@@ -1,0 +1,30 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Remove Evolution
+      become: yes
+      package:
+        name: evolution
+        state: absent
+
+    - name: Install Thunderbird
+      become: yes
+      package:
+        name: thunderbird
+        state: present
+
+    - name: Install Flatpak
+      become: yes
+      package:
+        name: flatpak
+        state: present
+
+    - name: Add the flathub flatpak repository remote
+      become: yes
+      command: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+    - name: Install Spotify
+      flatpak:
+        name: https://flathub.org/repo/appstream/com.spotify.Client.flatpakref
+        state: present

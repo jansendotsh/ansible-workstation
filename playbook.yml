@@ -69,3 +69,5 @@
           - arc-theme
           - paper-icon-theme
         state: present
+
+# Further tweaking via https://opensource.com/article/18/5/manage-your-workstation-ansible-part-3

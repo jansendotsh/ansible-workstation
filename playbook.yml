@@ -30,9 +30,12 @@
 
     - name: Install Flatpaks (Spotify & Slack)
       flatpak:
-        name: 
-          - https://flathub.org/repo/appstream/com.spotify.Client.flatpakref
-          - https://flathub.org/repo/appstream/com.slack.Slack.flatpakref
+        name: https://flathub.org/repo/appstream/com.spotify.Client.flatpakref
+        state: present
+
+    - name: Install Slack
+      flatpak:
+        name: https://flathub.org/repo/appstream/com.slack.Slack.flatpakref
         state: present
 
     - name: Install Visual Studio Code

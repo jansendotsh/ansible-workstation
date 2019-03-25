@@ -3,7 +3,8 @@
 ## Usage
 
 Simply run:
-```
+
+```bash
 ansible-playbook -K playbook.yml
 ```
 

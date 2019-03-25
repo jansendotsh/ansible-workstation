@@ -1,6 +1,10 @@
 ---
 - hosts: localhost
   connection: local
+
+  vars_files:
+    - vars/config.yml
+
   tasks:
     - name: Running updates
       become: yes
@@ -57,7 +61,7 @@
         name: vscode
       vars:
         users:
-          - username: garrett
+          - username: "{{ username }}"
             visual_studio_code_extensions:
               - dracula-theme.theme-dracula
               - vscoss.vscode-ansible
@@ -75,7 +79,7 @@
     - name: Installing AppImage packages (StandardNotes, PolarBookshelf & Caprine)
       script: scripts/appimage.sh
   
-    - name: Installing Gnome tweaks & themes
+    - name: Installing GNOME tweaks & themes
       become: yes
       package:
         name: 
@@ -85,3 +89,9 @@
         state: present
 
 # Further tweaking via https://opensource.com/article/18/5/manage-your-workstation-ansible-part-3
+    - name: Setting icons in GNOME dock
+      become: "{{ username }}"
+      dconf:
+        key: "/org/gnome/shell/favorite-apps"
+        value: "['google-chrome.desktop', 'firefox.desktop', 'com.spotify.Client.desktop', 'code.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop']"
+        state: present

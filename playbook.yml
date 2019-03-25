@@ -24,6 +24,9 @@
       package:
         name: 
           - python2-libselinux
+          #- python3-libselinux
+          - python2-psutil
+          #- python3-psutil
           - firefox
           - thunderbird
           - libreoffice
@@ -32,9 +35,12 @@
     
     - name: Enabling Google Chrome repository
       become: yes
-      copy: src=google-chrome.repo
-            dest=/etc/yum.repos.d/
-            owner=root group=root mode=0644
+      copy: 
+        src: google-chrome.repo
+        dest: /etc/yum.repos.d/
+        owner: root 
+        group: root 
+        mode: 0644
       
     - name: Installing Google Chrome
       become: yes
@@ -88,53 +94,68 @@
           - paper-icon-theme
         state: present
 
-# Further tweaking via https://opensource.com/article/18/5/manage-your-workstation-ansible-part-3
-# Further todo: copy wallpaper based on var and set that as lockscreen/wallpaper
+    - name: Copying wallpaper to Pictures folder
+      copy:
+        src: "wallpapers/{{ wallpaper }}"
+        dest: "/home/{{ username }}/Pictures/Wallpapers/"
+        owner: "{{ username }}"
+        mode: 0600
+
+    - name: Setting GNOME wallpaper
+      become: "{{ username }}"
+      dconf:
+        key: "/org/gnome/desktop/background/picture-uri"
+        value: "'file:///home/{{ username }}/Pictures/Wallpapers/{{ wallpaper }}'"
+
+    - name: Setting GDM lockscreen
+      become: "{{ username }}"
+      dconf:
+        key: "/org/gnome/desktop/screensaver/picture-uri"
+        value: "'file:///home/{{ username }}/Pictures/Wallpapers/{{ wallpaper }}'"
+
     - name: Setting GTK theme
       become: "{{ username }}"
       dconf:
         key: "/org/gnome/desktop/interface/gtk-theme"
         value: "'Arc-Dark'"
-        state: present
 
     - name: Setting GNOME shell theme
       become: "{{ username }}"
       dconf:
         key: "/org/gnome/shell/extensions/user-theme/name"
         value: "'Arc-Dark'"
-        state: present
 
     - name: Setting icon theme
       become: "{{ username }}"
       dconf:
         key: "/org/gnome/desktop/interface/icon-theme"
         value: "'Paper'"
-        state: present
 
     - name: Setting cursor theme
       become: "{{ username }}"
       dconf:
         key: "/org/gnome/desktop/interface/cursor-theme"
         value: "'Paper'"
-        state: present
 
     - name: Setting icons in GNOME dock
       become: "{{ username }}"
       dconf:
         key: "/org/gnome/shell/favorite-apps"
         value: "['google-chrome.desktop', 'firefox.desktop', 'com.spotify.Client.desktop', 'code.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop']"
-        state: present
       
     - name: Configuring GNOME extensions
       become: "{{ username }}"
       dconf:
         key: "/org/gnome/shell/enabled-extensions"
         value: "['background-logo@fedorahosted.org', 'user-theme@gnome-shell-extensions.gcampax.github.com', 'alternate-tab@gnome-shell-extensions.gcampax.github.com']"
-        state: present
 
+    - name: Setting Window titlebar settings
+      become: "{{ username }}"
+      dconf:
+        key: "/org/gnome/desktop/wm/preferences/button-layout"
+        value: "'appmenu:minimize,maximize,close'"
     - name: Making Caps Lock an additional CTRL
       become: "{{ username }}"
       dconf:
-        key: "/org/gnome/desktop/input-sources/xbk-options"
+        key: "/org/gnome/desktop/input-sources/xkb-options"
         value: "['caps:ctrl_modifier']"
-        state: present

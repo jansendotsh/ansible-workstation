@@ -32,4 +32,10 @@ The initial idea is courtesy of [Fedora Magazine](https://fedoramagazine.org/usi
 **Wallpapers are linked below:**
 
 *alien.png* - [MovieMania](https://www.moviemania.io/wallpaper/dm2pwp98dd-alien-covenant)
+*blade.png* - [Wallhaven](https://alpha.wallhaven.cc/wallpaper/623767)
+*hills.png* - [Wallhaven](https://alpha.wallhaven.cc/wallpaper/717531)
+*jack.png* - [Wallhaven](https://alpha.wallhaven.cc/wallpaper/496119)
+*joi.png* - [MovieMania](https://www.moviemania.io/wallpaper/dm778wf32f-blade-runner-2049)
 *robot.png* - [Wallhaven](https://alpha.wallhaven.cc/wallpaper/612031)
+*runner.png* - [Wallhaven](https://alpha.wallhaven.cc/wallpaper/734414)
+*town.png* - [Wallhaven](https://alpha.wallhaven.cc/wallpaper/444473)

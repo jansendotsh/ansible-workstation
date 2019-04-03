@@ -31,6 +31,8 @@
           - thunderbird
           - libreoffice
           - flatpak
+          - leafpad
+          - autokey-gtk
         state: present
     
     - name: Enabling Google Chrome repository
@@ -53,11 +55,13 @@
       command: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
     - name: Install Spotify
+      become: yes
       flatpak:
         name: https://flathub.org/repo/appstream/com.spotify.Client.flatpakref
         state: present
 
     - name: Install Slack
+      become: yes
       flatpak:
         name: https://flathub.org/repo/appstream/com.slack.Slack.flatpakref
         state: present

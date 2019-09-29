@@ -127,7 +127,7 @@
       become: "{{ username }}"
       dconf:
         key: "/org/gnome/desktop/background/picture-uri"
-        value: ":///home/{{ username }}/Pictures/Wallpapers/{{ wallpaper }}'"
+        value: "'file:///home/{{ username }}/Pictures/Wallpapers/{{ wallpaper }}'"
 
     - name: Setting GDM lockscreen
       become: "{{ username }}"
@@ -170,7 +170,7 @@
       become: "{{ username }}"
       dconf:
         key: "/org/gnome/shell/enabled-extensions"
-        value: "['background-logo@fedorahosted.org', 'user-theme@gnome-shell-extensions.gcampax.github.com', 'alternate-tab@gnome-shell-extensions.gcampax.github.com']"
+        value: "['background-logo@fedorahosted.org', 'user-theme@gnome-shell-extensions.gcampax.github.com']"
 
     - name: Setting Window titlebar settings
       become: "{{ username }}"
@@ -183,3 +183,9 @@
       dconf:
         key: "/org/gnome/desktop/input-sources/xkb-options"
         value: "['caps:ctrl_modifier']"
+
+    - name: Making Alt-Tab keybindings switch windows
+      become: "{{ username }}"
+      dconf:
+        key: "/org/gnome/desktop/wm/keybindings"
+        value: '["switch-applications:[]","switch-applications-backward:[]","switch-windows:[''<Alt>Tab'']","switch-windows-backward:[''<Shift><Alt>Tab'']"]'

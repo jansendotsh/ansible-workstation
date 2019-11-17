@@ -5,7 +5,8 @@ mkdir -p $HOME/Applications
 
 # StandardNotes
 curl -s https://api.github.com/repos/standardnotes/desktop/releases/latest |
-    grep "x86_64.AppImage" |
+    grep "AppImage" |
+    grep -v "i386" |
     cut -d '"' -f 4 |
     wget -O $HOME/Applications/StandardNotes.AppImage -qi -
 

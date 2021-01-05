@@ -23,10 +23,10 @@
       become: yes
       package:
         name: 
-          - python2-libselinux
-          #- python3-libselinux
-          - python2-psutil
-          #- python3-psutil
+          #- python2-libselinux
+          - python3-libselinux
+          #- python2-psutil
+          - python3-psutil
           - firefox
           - thunderbird
           - libreoffice

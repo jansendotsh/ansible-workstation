@@ -60,10 +60,10 @@
         name: https://flathub.org/repo/appstream/com.spotify.Client.flatpakref
         state: present
 
-    - name: Install Slack
+    - name: Install Discord
       become: yes
       flatpak:
-        name: https://flathub.org/repo/appstream/com.slack.Slack.flatpakref
+        name: https://flathub.org/repo/appstream/com.discordapp.Discord.flatpakref
         state: present
 
     - name: Install VLC
@@ -72,22 +72,10 @@
         name: https://flathub.org/repo/appstream/org.videolan.VLC.flatpakref
         state: present
 
-    - name: Install Postman
-      become: yes
-      flatpak:
-        name: https://flathub.org/repo/appstream/com.getpostman.Postman.flatpakref
-        state: present
-
     - name: Install FileZilla
       become: yes
       flatpak:
         name: https://flathub.org/repo/appstream/org.filezillaproject.Filezilla.flatpakref
-        state: present
-
-    - name: Install Planner
-      become: yes
-      flatpak:
-        name: https://flathub.org/repo/appstream/com.github.alainm23.planner.flatpakref
         state: present
 
     - name: Install Visual Studio Code
@@ -96,22 +84,11 @@
       vars:
         users:
           - username: "{{ username }}"
-            visual_studio_code_extensions:
-              - dracula-theme.theme-dracula
-              - vscoss.vscode-ansible
-              - tht13.html-preview-vscode
-              - davidanson.vscode-markdownlint
-              - ms-python.python
-              - tyriar.shell-launcher
-              - vscodevim.vim
             visual_studio_code_settings: {
               "git.autofetch": true,
               "window.titleBarStyle": "custom",
               "workbench.colorTheme": "Dracula"
             }
-    
-    - name: Installing AppImage packages (StandardNotes, PolarBookshelf & Caprine)
-      script: scripts/appimage.sh
   
     - name: Installing GNOME tweaks & themes
       become: yes
@@ -130,68 +107,79 @@
         mode: 0600
 
     - name: Setting GNOME wallpaper
-      become: "{{ username }}"
+      become: yes
+      become_user: "{{ username }}"
       dconf:
         key: "/org/gnome/desktop/background/picture-uri"
         value: "'file:///home/{{ username }}/Pictures/Wallpapers/{{ wallpaper }}'"
 
     - name: Setting GDM lockscreen
-      become: "{{ username }}"
+      become: yes
+      become_user: "{{ username }}"
       dconf:
         key: "/org/gnome/desktop/screensaver/picture-uri"
         value: "'file:///home/{{ username }}/Pictures/Wallpapers/{{ wallpaper }}'"
 
     - name: Setting GTK theme
-      become: "{{ username }}"
+      become: yes
+      become_user: "{{ username }}"
       dconf:
         key: "/org/gnome/desktop/interface/gtk-theme"
         value: "'Arc-Dark'"
 
     - name: Setting GNOME shell theme
-      become: "{{ username }}"
+      become: yes
+      become_user: "{{ username }}"
       dconf:
         key: "/org/gnome/shell/extensions/user-theme/name"
         value: "'Arc-Dark'"
 
     - name: Setting icon theme
-      become: "{{ username }}"
+      become: yes
+      become_user: "{{ username }}"
       dconf:
         key: "/org/gnome/desktop/interface/icon-theme"
         value: "'Paper'"
 
     - name: Setting cursor theme
-      become: "{{ username }}"
+      become: yes
+      become_user: "{{ username }}"
       dconf:
         key: "/org/gnome/desktop/interface/cursor-theme"
         value: "'Paper'"
 
     - name: Setting icons in GNOME dock
-      become: "{{ username }}"
+      become: yes
+      become_user: "{{ username }}"
       dconf:
         key: "/org/gnome/shell/favorite-apps"
         value: "['google-chrome.desktop', 'firefox.desktop', 'com.slack.Slack.desktop', 'com.spotify.Client.desktop', 'code.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Terminal.desktop']"
       
       # Alternate tab doesn't work in F30
     - name: Configuring GNOME extensions
-      become: "{{ username }}"
+      become: yes
+      become_user: "{{ username }}"
       dconf:
         key: "/org/gnome/shell/enabled-extensions"
         value: "['background-logo@fedorahosted.org', 'user-theme@gnome-shell-extensions.gcampax.github.com']"
 
     - name: Setting Window titlebar settings
-      become: "{{ username }}"
+      become: yes
+      become_user: "{{ username }}"
       dconf:
         key: "/org/gnome/desktop/wm/preferences/button-layout"
         value: "'appmenu:minimize,maximize,close'"
 
     - name: Making Caps Lock an additional CTRL
-      become: "{{ username }}"
+      become: yes
+      become_user: "{{ username }}"
       dconf:
         key: "/org/gnome/desktop/input-sources/xkb-options"
         value: "['caps:ctrl_modifier']"
 
     - name: Making Alt-Tab keybindings switch windows
-      become: "{{ username }}"
+      become: yes
+      become_user: "{{ username }}"
       dconf:
         key: "/org/gnome/desktop/wm/keybindings"
         value: '["switch-applications:[]","switch-applications-backward:[]","switch-windows:[''<Alt>Tab'']","switch-windows-backward:[''<Shift><Alt>Tab'']"]'
